@@ -279,3 +279,101 @@ docker compose ps
    # - Creates containers
    # - Starts everything
    ```
+
+## Next Steps in Docker Learning
+
+### 1. Docker Networking
+
+```bash
+# Create a custom network
+docker network create my-network
+
+# List networks
+docker network ls
+
+# Run container in specific network
+docker run --network my-network my-image
+
+# Inspect network
+docker network inspect my-network
+```
+
+### 2. Multi-Stage Builds
+
+Example of a multi-stage Dockerfile:
+
+```dockerfile
+# Build stage
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+# Production stage
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+### 3. Docker Best Practices
+
+#### Security
+
+- Use official base images
+- Run containers as non-root
+- Scan images for vulnerabilities:
+
+```bash
+docker scan my-image
+```
+
+#### Image Optimization
+
+- Use .dockerignore
+- Minimize layers
+- Use specific tags instead of 'latest'
+
+#### Production Considerations
+
+- Health checks
+- Resource limits
+- Logging
+- Monitoring
+
+### 4. Practice Projects
+
+1. **Multi-Container Application**
+
+   - Add Redis caching to current todo app
+   - Implement session management
+
+2. **CI/CD Pipeline**
+
+   - Automate builds with GitHub Actions
+   - Implement automated testing
+
+3. **Production Deployment**
+   - Deploy to cloud (AWS, GCP, Azure)
+   - Set up load balancing
+   - Implement scaling
+
+### 5. Advanced Topics
+
+1. **Container Orchestration**
+
+   - Kubernetes basics
+   - Docker Swarm
+
+2. **Monitoring & Logging**
+
+   - Prometheus
+   - Grafana
+   - ELK Stack
+
+3. **Security**
+   - Image scanning
+   - Runtime security
+   - Secret management
